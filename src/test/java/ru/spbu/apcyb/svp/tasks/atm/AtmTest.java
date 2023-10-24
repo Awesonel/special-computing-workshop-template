@@ -13,13 +13,22 @@ import org.junit.jupiter.api.Test;
 class AtmTest {
 
   @Test
-  void testInput() {
-    InputStream input = new ByteArrayInputStream(("1 2 3 \n10").getBytes());
-    AtmMain.run(input);
+  void testStrings() {
+    InputStream input = new ByteArrayInputStream(("1+2 3+2\n100").getBytes());
+    Assertions.assertThrows(NumberFormatException.class, () -> AtmMain.run(input));
+  }
+
+  @Test
+  void testEmpty() {
+    InputStream input = new ByteArrayInputStream(("\n").getBytes());
+    Assertions.assertThrows(NumberFormatException.class, () -> AtmMain.run(input));
   }
 
   @Test
   void testSimple() {
+
+    InputStream input = new ByteArrayInputStream(("1 2 3 \n10").getBytes());
+    AtmMain.run(input);
 
     long target = 5;
     int[] nominals = {3, 2};
