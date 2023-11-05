@@ -1,0 +1,7 @@
+2.txt
+sub_dir_1
+	3.txt
+sub_dir_2
+	1.txt
+	sub_sub_dir
+		3.gif
