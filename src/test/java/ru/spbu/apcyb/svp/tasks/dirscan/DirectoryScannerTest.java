@@ -64,7 +64,7 @@ class DirectoryScannerTest {
     Exception e = Assertions.assertThrows(RuntimeException.class,
         () -> DirectoryScanner.scanToFile(pathToScan, pathToSave));
 
-    Assertions.assertEquals("Provided path is not a directory.",
+    Assertions.assertEquals("Provided string is not a directory.",
         e.getMessage());
   }
 
@@ -76,7 +76,7 @@ class DirectoryScannerTest {
     Exception e = Assertions.assertThrows(RuntimeException.class,
         () -> DirectoryScanner.scanToFile(pathToScan, pathToSave));
 
-    Assertions.assertEquals("Provided path is not a directory.",
+    Assertions.assertEquals("Provided string is not a directory.",
         e.getMessage());
   }
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 
 /**
@@ -24,16 +23,12 @@ public class DirectoryScanner {
    */
   public static void scanToFile(String pathToScan, String pathToSave) {
 
-    try {
-      Path scanPath = Path.of(pathToScan).toAbsolutePath();
-      Path savePath = Path.of(pathToSave).toAbsolutePath();
-      if (!(Files.isDirectory(scanPath) && Files.isDirectory(savePath))) {
-        throw new IllegalArgumentException("Provided path is not a directory.");
-      }
-      scanToFile(scanPath, savePath);
-    } catch (InvalidPathException ex) {
-      throw new IllegalArgumentException("Provided string is not a path.");
+    Path scanPath = Path.of(pathToScan).toAbsolutePath();
+    Path savePath = Path.of(pathToSave).toAbsolutePath();
+    if (!(Files.isDirectory(scanPath) && Files.isDirectory(savePath))) {
+      throw new IllegalArgumentException("Provided string is not a directory.");
     }
+    scanToFile(scanPath, savePath);
 
   }
 

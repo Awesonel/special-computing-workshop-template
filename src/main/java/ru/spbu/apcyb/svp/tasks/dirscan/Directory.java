@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
-import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,18 +23,7 @@ public class Directory {
    * @param path directory path as a string
    */
   public Directory(String path) {
-
-    try {
-      Path providedPath = Path.of(path).toAbsolutePath();
-      if (!Files.isDirectory(providedPath)) {
-        throw new IllegalArgumentException("Provided path is not a directory.");
-      }
-      dirPath = providedPath;
-      readContent();
-    } catch (InvalidPathException ex) {
-      throw new IllegalArgumentException("Provided string is not a path.");
-    }
-
+      this(Path.of(path).toAbsolutePath());
   }
 
   /**
@@ -45,7 +33,7 @@ public class Directory {
    */
   public Directory(Path path) {
     if (!Files.isDirectory(path)) {
-      throw new IllegalArgumentException("Provided path is not a directory.");
+      throw new IllegalArgumentException("Provided string is not a directory.");
     }
     dirPath = path;
     readContent();
