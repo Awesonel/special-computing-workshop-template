@@ -88,8 +88,9 @@ public class TangentsCalculator {
    */
   private static List<Double> calculateTangents(List<Double> data) {
 
+    ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS);
 
-    try (ExecutorService executorService = Executors.newFixedThreadPool(NUMBER_OF_THREADS)) {
+    try {
 
       Future<List<Double>> futuresList = executorService.submit(
               () -> data.parallelStream().map(Math::tan).toList());
@@ -98,6 +99,8 @@ public class TangentsCalculator {
     } catch (ExecutionException | InterruptedException ex) {
       Thread.currentThread().interrupt();
       throw new RuntimeException(ex.getMessage());
+    } finally {
+      executorService.shutdown();
     }
   }
 
