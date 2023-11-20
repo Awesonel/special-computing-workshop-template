@@ -1,11 +1,12 @@
 package ru.spbu.apcyb.svp.tasks.multithread;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,7 +17,7 @@ import java.util.concurrent.Future;
  */
 public class TangentsCalculator {
 
-  public static final int NUMBER_OF_THREADS = 4;
+  public static final int NUMBER_OF_THREADS = 8;
 
   private TangentsCalculator() {
     throw new IllegalStateException("Utility class");
@@ -54,9 +55,11 @@ public class TangentsCalculator {
 
     List<Double> resultList = new ArrayList<>();
 
-    try (Scanner scanner = new Scanner(inputFile)) {
-      while (scanner.hasNextDouble()) {
-        resultList.add(scanner.nextDouble());
+    try (BufferedReader reader = new BufferedReader(new FileReader(inputFile))) {
+      String line = reader.readLine();
+      while (line != null) {
+        resultList.add(Double.parseDouble(line));
+        line = reader.readLine();
       }
     } catch (IOException ex) {
       throw new RuntimeException(ex.getMessage());
