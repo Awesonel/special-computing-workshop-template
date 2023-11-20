@@ -23,7 +23,7 @@ public class Directory {
    * @param path directory path as a string
    */
   public Directory(String path) {
-      this(Path.of(path).toAbsolutePath());
+    this(Path.of(path).toAbsolutePath());
   }
 
   /**
