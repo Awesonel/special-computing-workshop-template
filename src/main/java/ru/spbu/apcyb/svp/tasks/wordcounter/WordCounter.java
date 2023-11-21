@@ -67,8 +67,16 @@ public class WordCounter {
    * @param wordCounts хеш-мапа с подсчитанными словами
    */
   private void createDirectoryWithResultFiles(Map<String, Long> wordCounts) {
-    wordCounts.forEach((word, number)
-            -> CompletableFuture.runAsync(() -> writeOneWordToFile(word, number)));
+    Path newDirectory = Path.of(outputDirectory.toString() + "/results");
+    try {
+      Path directoryToSave = Files.createDirectories(newDirectory);
+      wordCounts.forEach((word, number)
+              -> CompletableFuture.runAsync(
+                      () -> writeOneWordToFile(word, number, directoryToSave)));
+    } catch (IOException ex) {
+      throw new RuntimeException(ex.getMessage());
+    }
+
   }
 
   /**
@@ -77,8 +85,8 @@ public class WordCounter {
    * @param word слово для создания файла
    * @param number количество вхождений этого слова в файл
    */
-  private void writeOneWordToFile(String word, Long number) {
-    String pathToSave = outputDirectory.toString() + String.format("%s.txt", word);
+  private void writeOneWordToFile(String word, Long number, Path directoryToSave) {
+    String pathToSave = directoryToSave.toString() + String.format("/%s.txt", word);
 
     try (BufferedWriter writer = new BufferedWriter(new FileWriter(pathToSave))) {
 
